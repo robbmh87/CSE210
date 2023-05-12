@@ -4,10 +4,7 @@ public class Entry
     public string _prompt;
     public string _input;
 
-    public void Display()
-    {
-        Console.WriteLine($"{_date} {_prompt} {_input}");
-    }
+
 
     public void GiveValues(string date, string prompt, string input)
     {
