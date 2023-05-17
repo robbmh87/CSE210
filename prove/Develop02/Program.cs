@@ -9,11 +9,10 @@ class Program
 {
     static void Main(string[] args)
     {
+        Journal journal = new Journal();
         while (true)
         {
             Display();
-            Journal journal = new Journal();
-    
             string choice = Console.ReadLine();
             switch (choice)
 
