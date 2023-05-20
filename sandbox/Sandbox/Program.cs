@@ -1,155 +1,97 @@
-
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 
-// Entry class to store user responses, prompts, and dates
-public class Entry
+class Program
 {
-    public string Prompt { get; set; }
-    public string Response { get; set; }
-    public DateTime Date { get; set; }
+static void Main()
+{
+// Create a new scripture
+Scripture scripture = new Scripture("John 3:16", "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.");
+
+// Clear the console screen and display the complete scripture
+Console.Clear();
+scripture.DisplayScripture();
+
+// Prompt the user to press enter or type quit
+while (true)
+{
+Console.WriteLine("Press enter to hide a word or type quit to exit:");
+string userInput = Console.ReadLine();
+
+// If the user types quit, end the program
+if (userInput.ToLower() == "quit")
+{
+break;
+}
+else
+{
+// Clear the console screen and hide a random word in the scripture
+Console.Clear();
+scripture.HideWord();
+scripture.DisplayScripture();
+
+// Check if all words have been hidden
+if (scripture.AllWordsHidden())
+{
+Console.WriteLine("Congratulations, you have memorized the scripture!");
+break;
+}
+}
+}
+}
 }
 
-// Journal class to manage entries
-public class Journal
+class Scripture
 {
-    private List<Entry> entries = new List<Entry>();
-    private List<string> prompts = new List<string>() {
-        "How was your day?",
-        "How did you feel?",
-        "Who did you speak with today?",
-        "What made you happy today?",
-        "What made you sad today? ",
-    };
+private string reference;
+private string text;
+private List<string> hiddenWords;
 
-    // Add a new entry
-    public void AddEntry()
-    {
-        // Select a random prompt
-        Random random = new Random();
-        int index = random.Next(prompts.Count);
-        string prompt = prompts[index];
-
-        // Get user response
-        Console.Write(prompt + " ");
-        string response = Console.ReadLine();
-
-        // Create new entry and add to list
-        Entry entry = new Entry {
-            Prompt = prompt,
-            Response = response,
-            Date = DateTime.Now
-        };
-        entries.Add(entry);
-        Console.WriteLine("Entry saved successfully!");
-    }
-
-    // Display all entries
-    public void DisplayEntries()
-    {
-        foreach (Entry entry in entries)
-        {
-            Console.WriteLine(entry.Date.ToString("MM/dd/yyyy") + " - " + entry.Prompt + " - " + entry.Response);
-        }
-    }
-
-    // Save journal to file
-    public void SaveJournal()
-    {
-        Console.Write("Enter filename to save: ");
-        string filename = Console.ReadLine();
-        try
-        {
-            using (StreamWriter writer = new StreamWriter(filename))
-            {
-                foreach (Entry entry in entries)
-                {
-                    writer.WriteLine(entry.Date.ToString("MM/dd/yyyy") + " - " + entry.Prompt + " - " + entry.Response);
-                }
-            }
-            Console.WriteLine("Journal saved successfully!");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
-    }
-
-    // Load journal from file
-    public void LoadJournal()
-    {
-        Console.Write("Enter filename to load: ");
-        string filename = Console.ReadLine();
-        if (File.Exists(filename))
-        {
-            entries.Clear();
-            using (StreamReader reader = new StreamReader(filename))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] parts = line.Split(new string[] { " - " }, StringSplitOptions.None);
-                    Entry entry = new Entry {
-                        Prompt = parts[1],
-                        Response = parts[2],
-                        Date = DateTime.ParseExact(parts[0], "MM/dd/yyyy", null)
-                    };
-                    entries.Add(entry);
-                }
-            }
-            Console.WriteLine("Journal loaded successfully!");
-        }
-        else
-        {
-            Console.WriteLine("File not found!");
-        }
-    }
+public Scripture(string reference, string text)
+{
+this.reference = reference;
+this.text = text;
+this.hiddenWords = new List<string>();
 }
 
-// Main program class
-public class Program
+public void DisplayScripture()
 {
-    private static Journal journal = new Journal();
-
-    static void Main(string[] args)
-    {
-        while (true)
-        {
-            // Display menu
-            Console.WriteLine();
-            Console.WriteLine("1. Write a new entry");
-            Console.WriteLine("2. Display the journal");
-            Console.WriteLine("3. Save the journal to a file");
-            Console.WriteLine("4. Load the journal from a file");
-            Console.WriteLine("5. Exit");
-            Console.Write("Enter your choice: ");
-
-            // Get user choice
-            string choice = Console.ReadLine();
-
-            // Perform action based on choice
-            switch (choice)
-            {
-                case "1":
-                    journal.AddEntry();
-                    break;
-                case "2":
-                    journal.DisplayEntries();
-                    break;
-                case "3":
-                    journal.SaveJournal();
-                    break;
-                case "4":
-                    journal.LoadJournal();
-                    break;
-                case "5":
-                    Console.WriteLine("Goodbye!");
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice! Please enter a number from 1 to 5.");
-                    break;
-            }
-        }
-    }
+// Display the reference and text of the scripture
+Console.WriteLine(reference);
+string[] words = text.Split(' ');
+foreach (string word in words)
+{
+// Check if the word is hidden
+if (hiddenWords.Contains(word))
+{
+Console.Write("_____ ");
 }
+else
+{
+Console.Write(word + " ");
+}
+}
+Console.WriteLine();
+}
+
+public void HideWord()
+{
+// Select a random word from the scripture text
+string[] words = text.Split(' ');
+Random rand = new Random();
+int index = rand.Next(words.Length);
+string wordToHide = words[index];
+
+// Add the word to the list of hidden words
+hiddenWords.Add(wordToHide);
+}
+
+public bool AllWordsHidden()
+{
+// Check if all words in the scripture text are in the list of hidden words
+string[] words = text.Split(' ');
+return hiddenWords.Count == words.Length;
+}
+}
+

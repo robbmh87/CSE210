@@ -4,41 +4,52 @@ using System.Linq;
 
 class Program
 {
-    static void Main()
+
+static void Main(string[] args)
     {
-        // Create a new scripture
-        Scripture scripture = new Scripture("John 3:16", "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.");
-
-        // Clear the console screen and display the complete scripture
-        Console.Clear();
-        scripture.DisplayScripture();
-
-        // Prompt the user to press enter or type quit
+        Reference reference = new Reference();
         while (true)
         {
-            Console.WriteLine("Press enter to hide a word or type quit to exit:");
-            string userInput = Console.ReadLine();
+            Display();
+            string choice = Console.ReadLine();
+            switch (choice)
 
-            // If the user types quit, end the program
-            if (userInput.ToLower() == "quit")
-            {
-                break;
-            }
-            else
-            {
-                // Clear the console screen and hide a random word in the scripture
-                Console.Clear();
-                scripture.HideWord();
-                scripture.DisplayScripture();
-
-                // Check if all words have been hidden
-                if (scripture.AllWordsHidden())
-                {
-                    Console.WriteLine("Congratulations, you have memorized the scripture!");
+            {   case "1":
+                    reference.ScriptureOne();
                     break;
-                }
+                case "2":
+                    reference.ScriptureTwo();
+                    break;
+                case "3":
+                    DisplayExit();
+                    return;
             }
+
         }
     }
+
+    public static void Display()
+
+    {
+        //create start menu and welcoming message
+        Console.WriteLine("Welcome to the scripture mastery!");
+        Console.WriteLine("Please select one of the following scriptures to memorize: ");
+        Console.WriteLine("1. John 3:16");
+        Console.WriteLine("2. Proverbs 3:5-6");
+        Console.WriteLine("3. Exit");
+        Console.WriteLine("What would you like to do ? ");
+    }
+
+  
+
+    public static void DisplayExit()
+    {
+         Console.Write("Good bye!");
+    }
+
+
 }
 
+
+
+    
