@@ -1,97 +1,80 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 class Program
 {
-static void Main()
-{
-// Create a new scripture
-Scripture scripture = new Scripture("John 3:16", "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.");
 
-// Clear the console screen and display the complete scripture
-Console.Clear();
-scripture.DisplayScripture();
+    static void Main(string[] args)
+    {
+        ListingActivity listingActivity = new ListingActivity();
+        BreathingActivity breathingActivity = new BreathingActivity();
+        ReflectionActivity reflectionActivity = new ReflectionActivity();
+        while (true)
+        {
 
-// Prompt the user to press enter or type quit
-while (true)
-{
-Console.WriteLine("Press enter to hide a word or type quit to exit:");
-string userInput = Console.ReadLine();
+            Console.WriteLine("Choose an activity:");
+            Console.WriteLine("1. Breathing Activity");
+            Console.WriteLine("2. Reflection Activity");
+            Console.WriteLine("3. Listing Activity");
 
-// If the user types quit, end the program
-if (userInput.ToLower() == "quit")
-{
-break;
-}
-else
-{
-// Clear the console screen and hide a random word in the scripture
-Console.Clear();
-scripture.HideWord();
-scripture.DisplayScripture();
+            string choice = Console.ReadLine();
+            Console.WriteLine("Choose an activity:");
+            switch (choice)
+            {
+                case "1":
+                    breathingActivity.Activity();
+                    break;
+                case "2":
+                    reflectionActivity.RunActivity();
+                    break;
+                case "3":
+                    listingActivity.RunActivity();
+                    break;
+                case "4":
+                    displayExit();
+                    return;
+            }
+        }
+    }
 
-// Check if all words have been hidden
-if (scripture.AllWordsHidden())
-{
-Console.WriteLine("Congratulations, you have memorized the scripture!");
-break;
-}
-}
-}
-}
-}
+    public static void display()
 
-class Scripture
-{
-private string reference;
-private string text;
-private List<string> hiddenWords;
+    {
+        Console.WriteLine("Choose an activity:");
+        Console.WriteLine("1. Breathing Activity");
+        Console.WriteLine("2. Reflection Activity");
+        Console.WriteLine("3. Listing Activity");
+        Console.WriteLine("4. Exit");
+        Console.WriteLine("What would you like to do ? ");
+    }
 
-public Scripture(string reference, string text)
-{
-this.reference = reference;
-this.text = text;
-this.hiddenWords = new List<string>();
-}
+    public static void displayExit()
+    {
+        Console.Write("Good bye!");
+    }
+    abstract class Activity
+    {
+        private int duration;
+        private string name;
+        private string description;
 
-public void DisplayScripture()
-{
-// Display the reference and text of the scripture
-Console.WriteLine(reference);
-string[] words = text.Split(' ');
-foreach (string word in words)
-{
-// Check if the word is hidden
-if (hiddenWords.Contains(word))
-{
-Console.Write("_____ ");
-}
-else
-{
-Console.Write(word + " ");
-}
-}
-Console.WriteLine();
-}
+        public Activity(string name, string description)
+        {
+            this.name = name;
+            this.description = description;
+        }
 
-public void HideWord()
-{
-// Select a random word from the scripture text
-string[] words = text.Split(' ');
-Random rand = new Random();
-int index = rand.Next(words.Length);
-string wordToHide = words[index];
+        public abstract void Start();
+        public abstract void End();
 
-// Add the word to the list of hidden words
-hiddenWords.Add(wordToHide);
+        public void SetDuration()
+        {
+            Console.WriteLine("Enter the duration in seconds: ");
+            duration = Convert.ToInt32(Console.ReadLine());
+        }
+    }
 }
 
-public bool AllWordsHidden()
-{
-// Check if all words in the scripture text are in the list of hidden words
-string[] words = text.Split(' ');
-return hiddenWords.Count == words.Length;
-}
 }
 
+}

@@ -5,30 +5,31 @@ using System.Linq;
 class Program
 {
 
-static void Main(string[] args)
+    static void Main(string[] args)
     {
         Reference reference = new Reference();
         while (true)
         {
-            Display();
+            display();
             string choice = Console.ReadLine();
             switch (choice)
 
-            {   case "1":
-                    reference.ScriptureOne();
+            {
+                case "1":
+                    reference.scriptureOne();
                     break;
                 case "2":
-                    reference.ScriptureTwo();
+                    reference.scriptureTwo();
                     break;
                 case "3":
-                    DisplayExit();
+                    displayExit();
                     return;
             }
 
         }
     }
 
-    public static void Display()
+    public static void display()
 
     {
         //create start menu and welcoming message
@@ -40,11 +41,11 @@ static void Main(string[] args)
         Console.WriteLine("What would you like to do ? ");
     }
 
-  
 
-    public static void DisplayExit()
+
+    public static void displayExit()
     {
-         Console.Write("Good bye!");
+        Console.Write("Good bye!");
     }
 
 
@@ -52,4 +53,3 @@ static void Main(string[] args)
 
 
 
-    

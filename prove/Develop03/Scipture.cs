@@ -1,16 +1,16 @@
 class Scripture
 {
-    
+
     private string text;
     private List<string> hiddenWords;
 
     public Scripture()
     {
-    
+
         this.hiddenWords = new List<string>();
     }
 
-    public void DisplayScripture(string text)
+    public void displayScripture(string text)
     {
         Reference reference = new Reference();
         // Display the reference and text of the scripture
@@ -31,7 +31,7 @@ class Scripture
         Console.WriteLine();
     }
 
-    public void HideWord(string text)
+    public void hideWord(string text)
     {
         // Select a random word from the scripture text
         string[] words = text.Split(' ');
@@ -43,7 +43,7 @@ class Scripture
         hiddenWords.Add(wordToHide);
     }
 
-    public bool AllWordsHidden(string text)
+    public bool allwordsHidden(string text)
     {
         // Check if all words in the scripture text are in the list of hidden words
         string[] words = text.Split(' ');
