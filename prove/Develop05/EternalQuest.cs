@@ -1,5 +1,3 @@
-
-// Define the main EternalQuest program class
 public class EternalQuest
 {
     private List<Goal> _goals = new List<Goal>();

@@ -1,4 +1,3 @@
-
 public class ChecklistGoal : Goal
 {
     private int _count = 0;

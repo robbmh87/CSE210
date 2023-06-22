@@ -1,4 +1,3 @@
-// Define the derived classes for each type of goal
 public class SimpleGoal : Goal
 {
     public SimpleGoal(string name, int points) : base(name, points) { }
