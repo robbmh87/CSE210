@@ -9,8 +9,6 @@ public class BreathingActivity : Activity
         Console.WriteLine("Prepare to begin...");
 
 
-
-
         Console.WriteLine("Breathe in...");
         System.Threading.Thread.Sleep(duration * 1000);
         Console.WriteLine("Breathe out...");
